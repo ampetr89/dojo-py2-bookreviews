@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>View Book</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'app1/css/style.css' %}">
+</head>
+<body>
+    <header>
+        <a href="/books">Home</a>
+        <form action='/logout' method='POST'>
+            {% csrf_token %}
+            <input type="submit" value="log out">
+        </form>
+        <hr>
+    </header>
+
+    <h1>{{book}}</h1>
+    Author: {{book.author}}
+
+    <h2>Reviews</h2>
+    {% for review in book.review_set.all %}
+        <article class="review">
+            <p class="rating">Rating: {{review.rating}} stars</p>
+            <p class="content"><a href="/users/{{review.user.id}}">{{review.user}}</a> says: {{review.content}}</p>
+            <p class="postedDate">Posted on: {{review.created_at}}</p>
+        </article>
+    {% empty %}
+        No reviews of this book
+
+    {% endfor %}
+
+    <h3>Add a review to this book</h3>
+    <form action='/create-book' method='POST'>
+        {% csrf_token %}
+        <input type="hidden" name="author" value="{{book.author}}">
+        <input type="hidden" name="title" value="{{book.title}}">
+
+        <p>Rating</p>
+        <input type="number" name="rating">
+
+        <p>Review</p>
+        <textarea name="content" rows="6" cols="25" placeholder="Leave your review here"></textarea>
+        <input type="submit" value="Add Review">
+    </form>
+</body>
+</html>

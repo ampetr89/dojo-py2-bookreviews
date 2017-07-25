@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add</title>
+</head>
+<body>
+    <header>
+        <a href="/books">Home</a>
+        <form action='/logout' method='POST'>
+            {% csrf_token %}
+            <input type="submit" value="log out">
+        </form>
+        <hr>
+    </header>
+
+    {% for message in messages %}
+        <p class="{{message.tags}}">{{message}}</p>
+    {% endfor %}
+    <form method='POST' action='/create-book'>
+        {% csrf_token %}
+        <p>Title</p>
+        <p><input type="text" name="title" required></p>
+
+        <p>Author</p>
+        <select name='author' required>
+            <option value="none" disabled selected>Select an Author</option>
+            {% for author in authors %}
+                <option value="{{author}}">{{author}}</option>
+            {% endfor %}
+                <option value="other">Other (specified below)</option>
+        </select>
+        <p>Or enter an author not in the list</p>
+        <p><input type="text" name="other-author"></p>
+
+        <p>Stars</p>
+        <input type="number" name="rating">
+
+        <p>Review</p>
+        <textarea rows="6" cols="20" name="content" placeholder="Leave your review here"></textarea>
+
+        <input type="submit" value="Add Review">
+    </form>
+    
+</body>
+</html>

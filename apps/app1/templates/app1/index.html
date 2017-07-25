@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Books</title>
+
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'app1/css/style.css' %}">
+</head>
+<body>
+    <header>
+        <a href="/books/add">Add book and review</a>
+        <form action='/logout' method='POST'>
+            {% csrf_token %}
+            <input type="submit" value="log out">
+        </form>
+        <hr>
+    </header>
+    <h1>Welcome {{request.session.first_name}}</h1>
+
+
+    <section class="panel" id="recent">
+        <h2>Recent book reviews</h2>
+        {% for review in reviews %}
+            <article class="review"> 
+                <h3><a href="books/{{review.book.id}}">{{review.book.title}}</a> by {{review.book.author.full_name}}</h3>
+                <p class="rating">{{review.rating}} Stars</p>
+                <p class="content"><a href="users/{{review.user.id}}">{{review.user}}</a> says: {{review.content}}</p>
+                <p class="postedDate">Posted on {{review.created_at}}</p>
+            </article>
+        {% empty %}
+            No book reviews yet..
+        {% endfor %}
+    </section>
+    <section class="panel" id="otherReviews">
+        <h3>Books with reviews</h3>
+        <ul>
+        {% for book in all_reviewed_books %}
+            <li><a href="/books/{{book.id}}">{{book.title}}</a></li>
+        {% empty %}
+         None available
+        {% endfor %}
+        </ul>
+    </section>
+</body>
+</html>

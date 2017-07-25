@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>View User</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'app1/css/style.css' %}">
+</head>
+<body>
+
+    <header>
+        <a href="/books">Home</a>
+        <a href="/books/add">Add book and review</a>
+        <form action='/logout' method='POST'>
+            {% csrf_token %}
+            <input type="submit" value="log out">
+        </form>
+        <hr>
+    </header>
+    <p>Username: {{user.username}}</p>
+    <p>Name: {{user}}</p>
+    <p>Email: {{user.email}}</p>
+    <p>Total reviews: {{ user.review_set.all|length }}</p>
+
+    Posted reviews on these books:
+    <ul>
+    {% for book in user_unique_books %}
+        <li><a href="/books/{{book.id}}">{{book}}</a></li>
+    {% endfor %}
+    </ul>
+    
+</body>
+</html>

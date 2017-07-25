@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Register</title>
+</head>
+<body>
+    {% for message in messages %}
+        <p class="{{message.tags}}">{{message}}</p>
+    {% endfor %}
+
+    <form method='POST' action='process-registration'>
+        {% csrf_token %}
+
+        <p>First Name</p>
+        <p><input type="text" name="first_name"></p>
+
+        <p>Last Name</p>
+        <p><input type="text" name="last_name"></p>
+
+        <p>Username (12 characters or less)</p>
+        <p><input type="text" name="username"></p>
+
+        <p>Email Address</p>
+        <p><input type="text" name="email"></p>
+
+        <p>Choose a Password</p>
+        <p><input type="password" name="password"></p>
+
+        <p>Re-enter Password</p>
+        <p><input type="password" name="password2"></p>
+
+        <input type="submit" value="Register">
+    </form>
+    <p>Already have an account? <a href="/login">Log in here</a>.</p>
+</body>
+</html>

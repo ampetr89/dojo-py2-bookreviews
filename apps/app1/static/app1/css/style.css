@@ -1,0 +1,19 @@
+.review{
+    margin: 1em;
+    border: 1px solid black;
+    padding: 1em;
+}
+
+.error{
+    color: red;
+}
+
+.success{
+    style: green;
+}
+
+section.panel{
+    vertical-align: top;
+    display: inline-block;
+    border: 1px solid black;
+}
